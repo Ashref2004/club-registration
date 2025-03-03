@@ -1,0 +1,76 @@
+import React, { useState } from "react";
+import QRCode from "qrcode.react";
+
+const RegistrationForm = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    studentId: "",
+    qrData: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormData({ ...formData, qrData: ${formData.name}-${formData.studentId} });
+  };
+
+  return (
+    <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
+      <h2 className="text-2xl font-bold mb-4">تسجيل المشاركين</h2>
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-96">
+        <label className="block mb-2">الاسم واللقب:</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          className="w-full p-2 border rounded mb-4"
+          required
+        />
+        <label className="block mb-2">رقم الهاتف:</label>
+        <input
+          type="text"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          className="w-full p-2 border rounded mb-4"
+          required
+        />
+        <label className="block mb-2">البريد الإلكتروني:</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          className="w-full p-2 border rounded mb-4"
+          required
+        />
+        <label className="block mb-2">الرقم الدراسي:</label>
+        <input
+          type="text"
+          name="studentId"
+          value={formData.studentId}
+          onChange={handleChange}
+          className="w-full p-2 border rounded mb-4"
+          required
+        />
+        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
+          تسجيل
+        </button>
+      </form>
+      {formData.qrData && (
+        <div className="mt-4">
+          <h3 className="text-lg font-bold mb-2">QR Code الخاص بك:</h3>
+          <QRCode value={formData.qrData} size={200} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default RegistrationForm;
